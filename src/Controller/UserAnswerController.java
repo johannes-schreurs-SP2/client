@@ -48,7 +48,7 @@ public class UserAnswerController {
                     responseContent.append(line);
                 }
             } else {
-                System.out.println("succes");
+                System.out.println("Answer registerd");
             }
 
         } catch(MalformedURLException e) {

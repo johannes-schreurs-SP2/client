@@ -128,6 +128,7 @@ public class Main extends Application {
                             alert.setContentText("Thank you for completing this survey!");
                             alert.showAndWait();
                             thirdStage.close();
+                            txtUsername.setText("");
                             primaryStage.show();
                         }
                     });
