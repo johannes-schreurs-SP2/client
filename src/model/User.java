@@ -3,19 +3,23 @@ package model;
 public class User {
 
     private int id;
-    private String username;
+    private String email;
 
-    public User(int id, String username) {
+    public User(int id, String email) {
         this.id = id;
-        this.username = username;
+        this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public User() {
+
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getId() {
