@@ -127,8 +127,8 @@ public class Main extends Application {
                             alert.setHeaderText(null);
                             alert.setContentText("Thank you for completing this survey!");
                             alert.showAndWait();
-                            Platform.exit();
-                            System.exit(0);
+                            thirdStage.close();
+                            primaryStage.show();
                         }
                     });
 
