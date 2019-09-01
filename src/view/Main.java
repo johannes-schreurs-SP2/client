@@ -42,7 +42,8 @@ public class Main extends Application {
         Button btnUsername = new Button("Submit");
         txtUsername.setPromptText("Email");
         Label label = new Label("Please enter your email address");
-
+        Stage secondStage = new Stage();
+        Stage thirdStage = new Stage();
 
         //GO to the list of surveys
         btnUsername.setOnAction(e -> {
@@ -106,19 +107,27 @@ public class Main extends Application {
 
 
 
-                    //Send the
+                    //Send the answers from the user to the database.
                     submitButton.setOnAction(click -> {
                         userAnswerController.addUserAnswerToDB(activeUser.getId(), activeSurvey.getId(), (int)toggleGroup.getSelectedToggle().getUserData(), true);
-                        if(pageIndex != questionIds.length) {
+                        if(pageIndex != questionIds.length - 1) {
                             pagination.setCurrentPageIndex(pageIndex + 1);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Thanks!");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Your answer has been registered.!");
+                            alert.showAndWait();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Thanks!");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Thank you for completing this survey!");
+                            alert.showAndWait();
+                            Platform.exit();
+                            System.exit(0);
                         }
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Thanks!");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Your answer has been registered.!");
-
-                        alert.showAndWait();
                     });
+
 
                     vBox.getChildren().add(submitButton);
                     return vBox;
@@ -127,16 +136,15 @@ public class Main extends Application {
 
                 VBox vbox = new VBox(20, pagination);
                 Scene thirdScene = new Scene(vbox, 400, 200);
-                Stage thirdStage = new Stage();
                 thirdStage.setScene(thirdScene);
                 thirdStage.setTitle(activeSurvey.getName());
                 thirdStage.show();
+                secondStage.close();
             });
 
             root2.getChildren().add(listView);
             Scene secondScene = new Scene(root2, 500,500);
-            Stage secondStage = new Stage();
-            secondStage.setScene(secondScene); // set the scene
+            secondStage.setScene(secondScene);
             secondStage.setTitle("Please select a survey");
             secondStage.show();
             primaryStage.close(); // close the first stage (Window)
