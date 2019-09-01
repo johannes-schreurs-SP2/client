@@ -1,0 +1,9 @@
+.pagination {
+    -fx-page-information-visible: true;
+    -fx-arrows-visible: false;
+    -fx-tooltip-visible: false;
+}
+.number-button{
+    -fx-opacity: 0;
+
+}

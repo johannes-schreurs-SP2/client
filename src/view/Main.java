@@ -64,6 +64,7 @@ public class Main extends Application {
 
 
                 Pagination pagination = new Pagination();
+                pagination.getStylesheets().add("view/StyleSheet.css");
 
                 ArrayList<Question> questions = questionController.getQuestions(activeSurvey.getId());
 
@@ -85,7 +86,7 @@ public class Main extends Application {
                     Label label1 = new Label(activeQuestion.getQuestion());
                     VBox vBox = new VBox();
                     vBox.setPadding(new Insets(10, 10, 50, 50));
-                    Button submitButton = new Button("Sumbit your answer");
+                    Button submitButton = new Button("Choose an option first.");
                     submitButton.setDisable(true);
 
                     ArrayList<Answer> answersToDisplay = answerController.getAnswers(questionIds[pageIndex]);
@@ -99,6 +100,7 @@ public class Main extends Application {
                         RadioButton radioButton = new RadioButton(a.getAnswer());
                         radioButton.setOnAction(radioButtonClick -> {
                             submitButton.setDisable(false);
+                            submitButton.setText("Submit your answer.");
                         });
                         radioButton.setToggleGroup(toggleGroup);
                         radioButton.setUserData(a.getId());
@@ -115,8 +117,10 @@ public class Main extends Application {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Thanks!");
                             alert.setHeaderText(null);
-                            alert.setContentText("Your answer has been registered.!");
+                            alert.setContentText("Thank you! Your answer has been registered.");
                             alert.showAndWait();
+
+
                         } else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Thanks!");
@@ -135,7 +139,7 @@ public class Main extends Application {
 
 
                 VBox vbox = new VBox(20, pagination);
-                Scene thirdScene = new Scene(vbox, 400, 200);
+                Scene thirdScene = new Scene(vbox, 400, 300);
                 thirdStage.setScene(thirdScene);
                 thirdStage.setTitle(activeSurvey.getName());
                 thirdStage.show();
