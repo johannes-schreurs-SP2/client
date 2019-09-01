@@ -4,15 +4,17 @@ public class UserAnswer {
     private int userId;
     private int surveyId;
     private int questionId;
+    private Boolean answered;
 
     public UserAnswer() {
 
     }
 
-    public UserAnswer(int userId, int surveyId, int questionId) {
+    public UserAnswer(int userId, int surveyId, int questionId, Boolean answered) {
         this.userId = userId;
         this.surveyId = surveyId;
         this.questionId = questionId;
+        this.answered = answered;
     }
 
     public int getUserId() {
@@ -37,5 +39,13 @@ public class UserAnswer {
 
     public void setQuestionId(int questionId) {
         this.questionId = questionId;
+    }
+
+    public void setAnswerd(Boolean answered) {
+        this.answered = answered;
+    }
+
+    public Boolean getAnswered() {
+        return answered;
     }
 }

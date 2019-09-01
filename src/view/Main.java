@@ -1,6 +1,7 @@
 package view;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,6 +17,7 @@ import Controller.UserController;
 import Controller.SurveyController;
 import Controller.QuestionController;
 import Controller.AnswerController;
+import Controller.UserAnswerController;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class Main extends Application {
     SurveyController surveyController = new SurveyController();
     QuestionController questionController = new QuestionController();
     AnswerController answerController = new AnswerController();
+    UserAnswerController userAnswerController = new UserAnswerController();
 
     Survey activeSurvey;
     Question activeQuestion;
@@ -81,6 +84,8 @@ public class Main extends Application {
                     Label label1 = new Label(activeQuestion.getQuestion());
                     VBox vBox = new VBox();
                     vBox.setPadding(new Insets(10, 10, 50, 50));
+                    Button submitButton = new Button("Sumbit your answer");
+                    submitButton.setDisable(true);
 
                     ArrayList<Answer> answersToDisplay = answerController.getAnswers(questionIds[pageIndex]);
 
@@ -88,12 +93,34 @@ public class Main extends Application {
 
                     vBox.getChildren().add(label1);
 
+                    //Add all different options
                     for(Answer a : answersToDisplay) {
                         RadioButton radioButton = new RadioButton(a.getAnswer());
+                        radioButton.setOnAction(radioButtonClick -> {
+                            submitButton.setDisable(false);
+                        });
                         radioButton.setToggleGroup(toggleGroup);
+                        radioButton.setUserData(a.getId());
                         vBox.getChildren().add(radioButton);
                     }
 
+
+
+                    //Send the
+                    submitButton.setOnAction(click -> {
+                        userAnswerController.addUserAnswerToDB(activeUser.getId(), activeSurvey.getId(), (int)toggleGroup.getSelectedToggle().getUserData(), true);
+                        if(pageIndex != questionIds.length) {
+                            pagination.setCurrentPageIndex(pageIndex + 1);
+                        }
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Thanks!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Your answer has been registered.!");
+
+                        alert.showAndWait();
+                    });
+
+                    vBox.getChildren().add(submitButton);
                     return vBox;
                 });
 
